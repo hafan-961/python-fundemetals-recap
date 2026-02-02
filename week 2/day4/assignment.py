@@ -32,7 +32,7 @@ class Book(Library_Item):   #Inhertitance
         if self._member == "yes":
             return 0
         else:
-            return self._days * 10
+            return self._days * 50
 
 
 class Magazine(Library_Item):  #Inheritance
@@ -43,7 +43,7 @@ class Magazine(Library_Item):  #Inheritance
         if self._member == "yes":
             return 0
         else:
-            return self._days * 20
+            return self._days * 30
 
 #composition class
 class LibraryApp:
@@ -64,5 +64,10 @@ class LibraryApp:
 
 
 app = LibraryApp()
-app.item_taken("Magazine", 1, "hafan", "no", 55)
+app.item_taken("Book", 1, "hafan", "no", 5)
 print(app.get_rent())
+
+app2 = LibraryApp()
+app2.item_taken("Magazine", 1, "hafan", "no", 3)
+print(app2.get_rent())
+
