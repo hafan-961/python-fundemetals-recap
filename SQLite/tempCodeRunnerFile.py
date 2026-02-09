@@ -1,0 +1,5 @@
+cur = connection1.cursor()
+# cur.execute("INSERT INTO employees VALUES (1 , 'Hafan' , 60000) , (2 , 'elton' , 50000)")
+# print("done")
+# connection1.commit()
+# connection1.close()
