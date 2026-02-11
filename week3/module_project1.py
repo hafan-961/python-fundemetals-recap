@@ -46,7 +46,7 @@ file = open(file_path,"w")
 file.write(f"Generated numbers: {numbers}")
 file.write(f"Even numbers: {even_numbers}")
 file.write(f"Odd numbers: {odd_numbers}")
-file.write(f"average: {rounded_avf}")
+file.write(f"average: {rounded_avg}")
 file.write(f"number count:\n")
 for num,count in count_numbers.items():
     file.write(f"{num} : {count}\n")

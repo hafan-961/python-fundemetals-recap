@@ -1,12 +1,18 @@
 import psycopg2
-
 conn = psycopg2.connect(
-    host="127.0.0.1",      # fixed (instead of localhost)
-    database="school",     # comma added
-    user="postgres",
-    password="root",       # must be your REAL postgres password
-    port="5432"
+    host = "localhost",
+    database = "school",
+    user = "postgres",
+    password = "root"
 )
-
-print("Connected successfully")
-
+print("Connected")
+cur = conn.cursor()
+cur.execute("""create table employees (id int, name varchar(50),salary int )""")
+conn.commit()
+cur.execute("""insert into employees values(2,'shan',22) """)
+conn.commit()
+cur.execute("""select * from employees""")
+rows=cur.fetchall()
+for i in rows:
+    print(i)
+conn.close()

@@ -61,9 +61,9 @@ import re
 # print(result)
 
 'non digits (\D)'
-text = "Marks: 90"
-result  = re.findall("\D" , text)
-print(result)
+# text = "Marks: 90"
+# result  = re.findall("\D" , text)
+# print(result)
 
 
 'words (\w)'
@@ -88,7 +88,7 @@ print(result)
 # print(result)
 
 
-'repetitioin count {}'
+'repetation count {}'
 # text = "phone: 8739391923"
 # result = re.findall("\d{10}" , text)
 # print(result)

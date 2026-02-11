@@ -18,16 +18,18 @@ class Student(base):
     age = Column(Integer)
     course = Column(String)
 
+#Step 4
 base.metadata.create_all(engine)
 
+#step 5
 Session = sessionmaker(bind = engine)
 session = Session()
-s1 = Student(id = 1,name = "Rahul" , age = 20, course = "Python")
-s2 = Student(id = 2,name = "Karan" , age = 21 ,course = "Java")
+s1 = Student(name = "Rahul" , age = 20, course = "Python")
+s2 = Student(name = "Karan" , age = 21 ,course = "Java")
 session.add(s1)
 session.add(s2)
 session.commit()
-students = session.query(Student).all()
+students = session.query(Student).all() 
 for i in students:
     print(i.id , i.name,i.age , i.course)
 
