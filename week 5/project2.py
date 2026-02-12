@@ -4,17 +4,17 @@ from sqlalchemy import  Column, Integer, String, Float, ForeignKey, text
 from sqlalchemy.orm import  sessionmaker, relationship
 
 engine = create_engine("sqlite:///fintrack.db")
-Base = declarative_base()
+base = declarative_base()
 Session = sessionmaker(bind=engine)
 session = Session()
 
-class Category(Base):
+class Category(base):
     __tablename__ = "categories"
     id = Column(Integer, primary_key=True)
     name = Column(String)
     expenses = relationship("Expense", back_populates="category")
 
-class Expense(Base):
+class Expense(base):
     __tablename__ = "expenses"
     id = Column(Integer, primary_key=True)
     title = Column(String)
@@ -23,26 +23,26 @@ class Expense(Base):
     category_id = Column(Integer, ForeignKey("categories.id"))
     category = relationship("Category", back_populates="expenses")
 
-class Subscription(Base):
+class Subscription(base):
     __tablename__ = "subscriptions"
     id = Column(Integer, primary_key=True)
     name = Column(String)
     amount = Column(Integer)
     next_date = Column(String)
 
-class Budget(Base):
+class Budget(base):
     __tablename__ = "budgets"
     id = Column(Integer, primary_key=True)
     month = Column(String)
     limit = Column(Integer)
 
-Base.metadata.create_all(engine)
+base.metadata.create_all(engine)
 
 def add_category():
     name = input("Category name: ")
     session.add(Category(name=name))
     session.commit()
-    print("✅ Category added")
+    print("Category added")
 
 def add_expense():
     title = input("Expense title: ")
@@ -51,7 +51,7 @@ def add_expense():
     category_id = int(input("Category ID: "))
     session.add(Expense(title=title, amount=amount, date=date, category_id=category_id))
     session.commit()
-    print("✅ Expense added")
+    print("Expense added")
 
 def update_expense():
     eid = int(input("Expense ID: "))
@@ -61,9 +61,9 @@ def update_expense():
         expense.amount = int(input("New amount: "))
         expense.date = input("New date: ")
         session.commit()
-        print("✅ Expense updated")
+        print("Expense updated")
     else:
-        print("❌ Expense not found")
+        print("Expense not found")
 
 def delete_expense():
     eid = int(input("Expense ID: "))
@@ -71,19 +71,19 @@ def delete_expense():
     if expense:
         session.delete(expense)
         session.commit()
-        print("✅ Expense deleted")
+        print("Expense deleted")
     else:
-        print("❌ Expense not found")
+        print("Expense not found")
 
 def search_by_date():
     date = input("Enter date (YYYY-MM-DD): ")
     expenses = session.query(Expense).filter(Expense.date == date).all()
     if expenses:
-        print(f"\n📅 Expenses on {date}:")
+        print(f"Expenses on {date}:")
         for e in expenses:
             print(f"{e.title} - ₹{e.amount} ({e.category.name})")
     else:
-        print("❌ No expenses found for this date")
+        print("No expenses found for this date")
 
 def add_subscription():
     name = input("Subscription name: ")
@@ -91,16 +91,16 @@ def add_subscription():
     next_date = input("Next payment date (YYYY-MM-DD): ")
     session.add(Subscription(name=name, amount=amount, next_date=next_date))
     session.commit()
-    print("✅ Subscription added")
+    print("subscription added")
 
 def view_subscriptions():
     subscriptions = session.query(Subscription).all()
     if subscriptions:
-        print("\n📋 Active Subscriptions:")
+        print("active subscriptions:")
         for s in subscriptions:
             print(f"{s.name} - ₹{s.amount}/month (Next: {s.next_date})")
     else:
-        print("❌ No subscriptions found")
+        print("No subscriptions found")
 
 def category_analytics():
     sql = """
@@ -112,14 +112,14 @@ def category_analytics():
     result = session.execute(text(sql))
     print("Category Wise Spending Report")
     for row in result:
-        print(f"{row[0]} → ₹{row[1]}")
+        print(row[0] , "-" , row[1])
 
 def set_budget():
     month = input("Month (YYYY-MM): ")
     limit = int(input("Budget limit: "))
     session.add(Budget(month=month, limit=limit))
     session.commit()
-    print("✅ Monthly budget set")
+    print(" Monthly budget set")
 
 def budget_alert():
     month = input("Month (YYYY-MM): ")
@@ -130,13 +130,13 @@ def budget_alert():
     budget = session.query(Budget).filter(Budget.month == month).first()
     if budget:
         if total and total > budget.limit:
-            print(f"⚠️ Budget exceeded! Spent: ₹{total} | Limit: ₹{budget.limit}")
+            print(f"Budget exceeded! Spent: ₹{total} | Limit: ₹{budget.limit}")
         else:
             spent = total if total else 0
             remaining = budget.limit - spent
-            print(f"✅ Within budget Spent: ₹{spent} | Remaining: ₹{remaining}")
+            print(f" Within budget Spent: ₹{spent} | Remaining: ₹{remaining}")
     else:
-        print("❌ No budget set for this month")
+        print("No budget set for this month")
 
 def view_categories():
     categories = session.query(Category).all()
@@ -145,11 +145,11 @@ def view_categories():
         for c in categories:
             print(f"ID: {c.id} - {c.name}")
     else:
-        print("❌ No categories found")
+        print("No categories found")
 
 while True:
     print("""
-===== FINTRACK PRO =====
+===== HAFAN FINTRACK PRO =====
 1. Add Category
 2. View Categories
 3. Add Expense
@@ -190,4 +190,25 @@ while True:
         print("Thank you for using FinTrack pro")
         break
     else:
-        print("❌ Invalid choice")
+        print("Invalid choice")
+
+
+
+# ---------------------------------- README ---------------------------------------------
+# FinTrack Pro
+
+'''FinTrack Pro** is a simple command-line expense tracker built using **Python, SQLAlchemy, and SQLite**.  
+It lets users manage categories, expenses, subscriptions, and monthly budgets.
+
+## Features
+- Add & view categories
+- Add, update, delete expenses
+- Search expenses by date
+- Track subscriptions
+- Category-wise spending report
+- Set monthly budget & alerts
+
+## Run the Project
+```bash
+python main.py
+'''
