@@ -1,0 +1,14 @@
+1.create virtual environment
+2. django-admin startproject store_project
+3. cd store_project
+4. python manage.py startapp core
+5. pip install djangorestframework
+6.pip install psycopg2-binary®
+7. add core and rest_ framework in installed apps (settings.py)
+8. add database in settings.py like host, name, password
+9. now code in models.py
+10. then migrate 2 commands
+11.serialize
+12. views.py
+13.urls.py
+14. runserver

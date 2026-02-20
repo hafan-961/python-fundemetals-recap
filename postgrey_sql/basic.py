@@ -1,7 +1,7 @@
 import psycopg2
 conn = psycopg2.connect(
     host = "localhost",
-    database = "school",
+    database = "store_db",
     user = "postgres",
     password = "root"
 )
